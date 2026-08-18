@@ -41,6 +41,14 @@ SITE = {
 # ---------------- 文章元信息 ----------------
 ARTICLES = [
     {
+        "id": "prompt-to-skill",
+        "slug": "prompt-to-skill",
+        "title": "Prompt 越写越长，就该做 Skill 了吗？",
+        "date": "2026-08-18",
+        "category": "思考",
+        "tags": ["Prompt", "Skill", "Agent", "方法论"],
+    },
+    {
         "id": "6443839",
         "slug": "feishu-doubao-ai-office",
         "title": "飞书和豆包合到一起后，AI 办公开始争夺“下一步”",
