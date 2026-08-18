@@ -431,8 +431,8 @@ body.about-page .site-header {
 .about-top {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(180deg, #9ed4ef 0%, #c6e8f7 55%, #eef6fb 100%);
-  padding: 96px 0 88px;
+  background: linear-gradient(180deg, #9ed4ef 0%, #c6e8f7 55%, #fff3e7 100%);
+  padding: 96px 0 140px;
   text-align: center;
 }
 .about-top::before {
@@ -493,43 +493,6 @@ body.about-page .site-header {
 .about-meta a:hover { color: #0060c0; text-decoration: underline; }
 .about-meta .sep { color: rgba(3, 3, 2, 0.25); }
 
-/* —— 正在做：两个粉彩色块左右排列 —— */
-.about-work { padding: 0 24px 96px; }
-.about-h2 {
-  font-family: 'Lora', var(--font-serif);
-  font-size: 28px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  color: #030302;
-  margin: 0 0 24px;
-}
-.about-work-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
-}
-.about-work-card {
-  border-radius: 20px;
-  padding: 36px 32px;
-  box-shadow: rgba(0, 0, 0, 0.01) 0 50px 40px 0, rgba(0, 0, 0, 0.02) 0 50px 40px 0, rgba(0, 0, 0, 0.05) 0 20px 40px 0, rgba(0, 0, 0, 0.08) 0 3px 10px 0;
-}
-.about-work-card:nth-child(1) { background: #d8f0df; }
-.about-work-card:nth-child(2) { background: #e2e9fc; }
-.about-work-card h3 {
-  font-size: 22px;
-  font-weight: 700;
-  color: #030302;
-  margin: 0 0 10px;
-}
-.about-work-card p {
-  font-size: 15px;
-  line-height: 1.7;
-  color: #3c4347;
-  margin: 0;
-}
-
 @media (max-width: 720px) {
-  .about-top { padding: 64px 0 60px; }
-  .about-work { padding-bottom: 64px; }
-  .about-work-grid { grid-template-columns: 1fr; }
+  .about-top { padding: 64px 0 100px; }
 }

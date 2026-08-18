@@ -506,10 +506,6 @@ def build_about():
         f'<span class="sep">·</span>'
         f'<a href="{SITE["woshipm"]}" target="_blank" rel="noopener">人人都是产品经理</a>'
     )
-    projects = "".join(
-        f'<div class="about-work-card"><h3>{esc(p["name"])}</h3><p>{esc(p["desc"])}</p></div>'
-        for p in SITE.get("projects", [])
-    )
     content = f'''<main class="about-page">
   <section class="about-top">
     <div class="wrap about-top-inner">
@@ -519,13 +515,6 @@ def build_about():
       <div class="about-meta">
         {meta}
       </div>
-    </div>
-  </section>
-
-  <section class="about-work wrap">
-    <h2 class="about-h2">正在做</h2>
-    <div class="about-work-grid">
-      {projects}
     </div>
   </section>
 </main>'''
