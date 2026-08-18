@@ -180,7 +180,7 @@ def illustration(name, size=28):
 
 
 # ---------------- HTML 片段（rel = 当前页相对根目录的前缀） ----------------
-def nav_html(active="", rel=""):
+def nav_html(active="", rel="", cta=True):
     items = [
         ("index.html", "首页", "首页"),
         ("blog/index.html", "文章", "文章"),
@@ -192,7 +192,8 @@ def nav_html(active="", rel=""):
     for href, label, key in items:
         cls = "active" if active == key else ""
         links.append(f'<a href="{rel}{href}" class="{cls}">{label}</a>')
-    links.append(f'<a href="{SITE["github"]}" target="_blank" rel="noopener">GitHub ↗</a>')
+    gh_cls = "nav-cta" if cta else ""
+    links.append(f'<a href="{SITE["github"]}" target="_blank" rel="noopener" class="{gh_cls}">GitHub ↗</a>')
     return "\n      ".join(links)
 
 
@@ -213,7 +214,7 @@ def header(active="", rel=""):
 def footer(rel=""):
     return f'''<footer class="site-footer">
   <div class="wrap">
-    <nav class="footer-links">{nav_html("", rel)}</nav>
+    <nav class="footer-links">{nav_html("", rel, cta=False)}</nav>
     <div class="copyright">© {esc(SITE["copyright"])}</div>
   </div>
 </footer>'''
@@ -235,14 +236,14 @@ def sidebar_html(rel=""):
     wechat = ""
     avatar = f'<img src="{rel}{SITE["avatar"]}" alt="头像">' if SITE.get("avatar") else f'<span style="display:flex;align-items:center;justify-content:center;height:100%;font-size:30px;font-weight:700;color:#fff;background:#0078d4;">{esc(SITE["name"][0].upper())}</span>'
     if SITE.get("wechat"):
-        qr = f'<div style="width:160px;height:160px;border:1px solid #e6e4dd;border-radius:4px;overflow:hidden;margin:0 auto 10px;"><img src="{rel}{SITE["wechat_qr"]}" alt="公众号二维码" style="width:100%;height:100%;object-fit:cover;"></div>' if SITE.get("wechat_qr") else ""
-        desc = f'<p style="font-size:12px;color:var(--faint);margin:6px 0 0;line-height:1.7;text-align:left;">{esc(SITE["wechat_desc"])}</p>' if SITE.get("wechat_desc") else ""
+        qr = f'<div style="width:160px;height:160px;border:1px solid var(--slate-edge);border-radius:12px;overflow:hidden;margin:0 auto 10px;"><img src="{rel}{SITE["wechat_qr"]}" alt="公众号二维码" style="width:100%;height:100%;object-fit:cover;"></div>' if SITE.get("wechat_qr") else ""
+        desc = f'<p style="font-size:12px;color:var(--ash);margin:6px 0 0;line-height:1.7;text-align:left;">{esc(SITE["wechat_desc"])}</p>' if SITE.get("wechat_desc") else ""
         wechat = f'''<div class="sblock">
       <h3>{icon("chat", 15)} 微信</h3>
       <div class="box">
         {qr}
-        <p style="font-size:14px;font-weight:700;margin:0;">公众号 · {esc(SITE["wechat"])}</p>
-        <p style="font-size:12px;color:var(--muted);margin:2px 0 0;">扫码关注</p>
+        <p style="font-size:14px;font-weight:700;margin:0;color:#fff;">公众号 · {esc(SITE["wechat"])}</p>
+        <p style="font-size:12px;color:var(--smoke);margin:2px 0 0;">扫码关注</p>
         {desc}
       </div>
     </div>'''
@@ -316,7 +317,8 @@ def render_refs(refs):
     return f'<div class="refs"><h2>参考资料</h2><ul>{li}</ul></div>'
 
 
-def full_page(title, active, content, rel="", head_extra=""):
+def full_page(title, active, content, rel="", head_extra="", body_class=""):
+    body_attr = f' class="{body_class}"' if body_class else ""
     return f'''<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -325,7 +327,7 @@ def full_page(title, active, content, rel="", head_extra=""):
 <title>{esc(title)} · {esc(SITE["name"])}</title>
 <link rel="stylesheet" href="{rel}assets/css/style.css">
 {head_extra}</head>
-<body>
+<body{body_attr}>
 {header(active, rel)}
 {content}
 {footer(rel)}
@@ -333,10 +335,16 @@ def full_page(title, active, content, rel="", head_extra=""):
 </html>'''
 
 
+def cat_class(category):
+    """分类 → 标签胶囊配色类。产品分析=iris(默认)，思考=ember，教程=ash。"""
+    return {"思考": "cat-ember", "教程": "cat-ash"}.get(category, "")
+
+
 def post_item(a, abstract, rel=""):
+    cc = cat_class(a["category"])
     return f'''<div class="post-item">
       <h2 class="ptitle"><a href="{rel}articles/{a["slug"]}.html">{esc(a["title"])}</a></h2>
-      <div class="post-meta"><span>{a["date"]}</span><span class="cat-tag">{a["category"]}</span></div>
+      <div class="post-meta"><span>{a["date"]}</span><span class="cat-tag {cc}">{a["category"]}</span></div>
       <p class="excerpt">{esc(abstract)}</p>
       <a class="read-more" href="{rel}articles/{a["slug"]}.html">继续读 →</a>
     </div>'''
@@ -363,7 +371,7 @@ def build_article_page(meta):
     content = f'''<main class="article-page">
   <article>
     <header class="article-head">
-      <div class="cat"><a href="../blog/index.html" class="cat-tag">{meta["category"]}</a></div>
+      <div class="cat"><a href="../blog/index.html" class="cat-tag {cat_class(meta["category"])}">{meta["category"]}</a></div>
       <h1>{esc(meta["title"])}</h1>
       <div class="meta">{meta["date"]} · 全文约 {wordcount} 字{(" · " + tags) if tags else ""}</div>
     </header>
@@ -375,22 +383,36 @@ def build_article_page(meta):
     </div>
   </article>
 </main>'''
-    return full_page(meta["title"], "", content, rel="../")
+    return full_page(meta["title"], "", content, rel="../", body_class="page-light")
 
 
 def build_index():
     stats = [
-        (str(len(ARTICLES)), "文章", "doc", "AI 产品与行业观察 · 2026", "blog/index.html"),
-        (str(CATEGORIES.get("思考", 0)), "思考", "bulb", "把想法沉淀成文章", "thought/index.html"),
-        (str(len(SITE.get("projects", []))), "项目", "rocket", "在做的产品与工具", "project/index.html"),
+        (str(len(ARTICLES)), "文章", "blog/index.html"),
+        (str(CATEGORIES.get("思考", 0)), "思考", "thought/index.html"),
+        (str(len(SITE.get("projects", []))), "项目", "project/index.html"),
     ]
-    cards = "\n".join(
-        f'<a class="stat-card" href="{href}"><span class="arrow">→</span>'
-        f'<span class="neu-icon">{icon(ic, 22)}</span>'
-        f'<div class="num">{num}</div><div class="title">{t}</div><div class="sub">{sub}</div></a>'
-        for num, t, ic, sub, href in stats
+    stat_html = "\n".join(
+        f'<a class="stat" href="{href}"><span class="stat-ring"><span class="stat-num">{num}</span></span><span class="stat-label">{label}</span></a>'
+        for num, label, href in stats
     )
-    hero = f'<section class="hero"><div class="wrap"><div class="hero-grid">{cards}</div></div></section>'
+    hero = f'''<section class="hero">
+  <div class="aurora-wash" aria-hidden="true"></div>
+  <div class="wrap hero-inner">
+    <div class="hero-copy">
+      <span class="hero-eyebrow"><span class="dot"></span>AI 产品 · 行业观察 · 深度思考</span>
+      <h1 class="hero-title">目标是 <span class="grad">AGI</span></h1>
+      <p class="hero-lead">写 AI 产品、行业与思考。把对 AI 的观察，沉淀成可复用的方法与工具。</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="blog/index.html">阅读文章 →</a>
+        <a class="btn btn-ghost" href="about/index.html">关于我</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      {stat_html}
+    </div>
+  </div>
+</section>'''
 
     posts = []
     for a in ARTICLES:
@@ -408,7 +430,7 @@ def build_index():
       {sidebar_html()}
     </div>
   </main>'''
-    return full_page("首页", "首页", hero + "\n" + main)
+    return full_page("首页", "首页", hero + "\n" + main, body_class="page-home")
 
 
 def build_blog():
@@ -434,7 +456,7 @@ def build_blog():
     </div>
     {chr(10).join(groups)}
   </main>'''
-    return full_page("文章", "文章", content, rel="../")
+    return full_page("文章", "文章", content, rel="../", body_class="page-light")
 
 
 def build_category(cat, active):
@@ -451,7 +473,7 @@ def build_category(cat, active):
     </div>
     {chr(10).join(items)}
   </main>'''
-    return full_page(cat, active, content, rel="../")
+    return full_page(cat, active, content, rel="../", body_class="page-light")
 
 
 def build_project():
@@ -466,7 +488,7 @@ def build_project():
             )
         body = "\n".join(cards)
     else:
-        body = '<p style="color:var(--muted)">项目整理中，敬请期待。</p>'
+        body = '<p style="color:rgba(5,5,6,0.55)">项目整理中，敬请期待。</p>'
     content = f'''<main class="wrap">
     <div class="page-head">
       <h1>{icon("rocket", 24)} 项目</h1>
@@ -474,7 +496,7 @@ def build_project():
     </div>
     {body}
   </main>'''
-    return full_page("项目", "项目", content, rel="../")
+    return full_page("项目", "项目", content, rel="../", body_class="page-light")
 
 
 def build_about():
@@ -496,7 +518,7 @@ def build_about():
       <ul>{tr}</ul>
     </div>
   </main>'''
-    return full_page("关于", "关于", content, rel="../")
+    return full_page("关于", "关于", content, rel="../", body_class="page-light")
 
 
 def main():
