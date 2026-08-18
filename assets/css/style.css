@@ -422,46 +422,64 @@ img { max-width: 100%; height: auto; }
    ============================================================ */
 body.about-page { background: #fff3e7; }
 body.about-page .site-header {
-  background: rgba(255, 243, 231, 0.86);
+  background: rgba(251, 250, 244, 0.86);
   border-bottom-color: rgba(3, 3, 2, 0.06);
 }
 .about-page .wrap { max-width: 1040px; }
 
-/* —— 顶部身份区：居中、留白 —— */
-.about-top { padding: 96px 0 80px; text-align: center; }
+/* —— 天蓝色 hero —— */
+.about-top {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #9ed4ef 0%, #c6e8f7 55%, #eef6fb 100%);
+  padding: 96px 0 88px;
+  text-align: center;
+}
+.about-top::before {
+  content: "";
+  position: absolute;
+  right: -110px; top: -110px;
+  width: 340px; height: 340px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.6), transparent 70%);
+}
+.about-top::after {
+  content: "";
+  position: absolute;
+  left: -100px; bottom: -140px;
+  width: 320px; height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(253, 233, 155, 0.55), transparent 70%);
+}
+.about-top-inner { position: relative; z-index: 1; }
+
 .about-avatar {
-  width: 96px;
-  height: 96px;
+  width: 104px;
+  height: 104px;
   border-radius: 50%;
   overflow: hidden;
-  margin: 0 auto 30px;
-  box-shadow:
-    0 0 0 4px #fff,
-    0 0 0 7px rgba(155, 216, 169, 0.5),
-    rgba(0, 0, 0, 0.01) 0 50px 40px 0,
-    rgba(0, 0, 0, 0.02) 0 50px 40px 0,
-    rgba(0, 0, 0, 0.05) 0 20px 40px 0,
-    rgba(0, 0, 0, 0.08) 0 3px 10px 0;
+  margin: 0 auto 28px;
+  border: 5px solid #fff;
+  box-shadow: rgba(0, 0, 0, 0.01) 0 50px 40px 0, rgba(0, 0, 0, 0.02) 0 50px 40px 0, rgba(0, 0, 0, 0.05) 0 20px 40px 0, rgba(0, 0, 0, 0.08) 0 3px 10px 0;
 }
 .about-avatar img { width: 100%; height: 100%; object-fit: cover; }
 
 .about-title {
   font-family: 'Lora', var(--font-serif);
-  font-size: clamp(40px, 6vw, 56px);
+  font-size: clamp(42px, 6.5vw, 64px);
   font-weight: 600;
-  line-height: 1.08;
+  line-height: 1.05;
   letter-spacing: -0.02em;
   color: #030302;
   margin: 0 0 20px;
 }
 .about-lead {
-  max-width: 560px;
+  max-width: 580px;
   margin: 0 auto 30px;
   font-size: 17px;
   line-height: 1.85;
-  color: #41413f;
+  color: #24303a;
 }
-
 .about-meta {
   display: flex;
   justify-content: center;
@@ -471,11 +489,11 @@ body.about-page .site-header {
   font-size: 14px;
 }
 .about-meta span,
-.about-meta a { color: #41413f; }
-.about-meta a:hover { color: #0087ff; text-decoration: underline; }
-.about-meta .sep { color: #d8d3c8; }
+.about-meta a { color: #24303a; }
+.about-meta a:hover { color: #0060c0; text-decoration: underline; }
+.about-meta .sep { color: rgba(3, 3, 2, 0.25); }
 
-/* —— 正在做：两个大块左右排列 —— */
+/* —— 正在做：两个粉彩色块左右排列 —— */
 .about-work { padding: 0 24px 96px; }
 .about-h2 {
   font-family: 'Lora', var(--font-serif);
@@ -491,34 +509,22 @@ body.about-page .site-header {
   gap: 24px;
 }
 .about-work-card {
-  background: #fff;
   border-radius: 20px;
-  padding: 32px;
-  box-shadow:
-    rgba(0, 0, 0, 0.01) 0 50px 40px 0,
-    rgba(0, 0, 0, 0.02) 0 50px 40px 0,
-    rgba(0, 0, 0, 0.05) 0 20px 40px 0,
-    rgba(0, 0, 0, 0.08) 0 3px 10px 0;
+  padding: 36px 32px;
+  box-shadow: rgba(0, 0, 0, 0.01) 0 50px 40px 0, rgba(0, 0, 0, 0.02) 0 50px 40px 0, rgba(0, 0, 0, 0.05) 0 20px 40px 0, rgba(0, 0, 0, 0.08) 0 3px 10px 0;
 }
-.about-dot {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  margin-bottom: 18px;
-}
-.dot-mint { background: #9bd8a9; }
-.dot-periwinkle { background: #b8caf5; }
+.about-work-card:nth-child(1) { background: #d8f0df; }
+.about-work-card:nth-child(2) { background: #e2e9fc; }
 .about-work-card h3 {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 700;
   color: #030302;
-  margin: 0 0 8px;
+  margin: 0 0 10px;
 }
 .about-work-card p {
   font-size: 15px;
   line-height: 1.7;
-  color: #5b5a56;
+  color: #3c4347;
   margin: 0;
 }
 

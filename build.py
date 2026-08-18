@@ -506,10 +506,9 @@ def build_about():
         f'<span class="sep">·</span>'
         f'<a href="{SITE["woshipm"]}" target="_blank" rel="noopener">人人都是产品经理</a>'
     )
-    dots = ["mint", "periwinkle"]
     projects = "".join(
-        f'<div class="about-work-card"><span class="about-dot dot-{dots[i % 2]}"></span><h3>{esc(p["name"])}</h3><p>{esc(p["desc"])}</p></div>'
-        for i, p in enumerate(SITE.get("projects", []))
+        f'<div class="about-work-card"><h3>{esc(p["name"])}</h3><p>{esc(p["desc"])}</p></div>'
+        for p in SITE.get("projects", [])
     )
     content = f'''<main class="about-page">
   <section class="about-top">
