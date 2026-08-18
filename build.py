@@ -496,7 +496,7 @@ def build_project():
 
 
 def build_about():
-    lead = "".join(SITE["intro"])
+    lead = "<br>".join(esc(t) for t in SITE["intro"])
     meta = (
         f'<span>{esc(SITE["location"])}</span>'
         f'<span class="sep">·</span>'
@@ -511,7 +511,7 @@ def build_about():
     <div class="wrap about-top-inner">
       <div class="about-avatar"><img src="../{SITE["avatar"]}" alt="{esc(SITE["name"])}"></div>
       <h1 class="about-title">Hi，我是 {esc(SITE["name"])}</h1>
-      <p class="about-lead">{esc(lead)}</p>
+      <p class="about-lead">{lead}</p>
       <div class="about-meta">
         {meta}
       </div>

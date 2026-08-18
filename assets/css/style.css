@@ -478,7 +478,6 @@ body.about-page .site-header {
   font-size: 17px;
   line-height: 1.85;
   color: #24303a;
-  white-space: nowrap;
 }
 .about-meta {
   display: flex;
@@ -495,5 +494,4 @@ body.about-page .site-header {
 
 @media (max-width: 720px) {
   .about-top { padding: 64px 0 100px; }
-  .about-lead { white-space: normal; }
 }
