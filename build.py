@@ -333,7 +333,8 @@ def render_refs(refs):
     return f'<div class="refs"><h2>参考资料</h2><ul>{"".join(li_parts)}</ul></div>'
 
 
-def full_page(title, active, content, rel="", head_extra=""):
+def full_page(title, active, content, rel="", head_extra="", body_class=""):
+    body_attr = f' class="{body_class}"' if body_class else ""
     return f'''<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -342,7 +343,7 @@ def full_page(title, active, content, rel="", head_extra=""):
 <title>{esc(title)} · {esc(SITE["name"])}</title>
 <link rel="stylesheet" href="{rel}assets/css/style.css">
 {head_extra}</head>
-<body>
+<body{body_attr}>
 {header(active, rel)}
 {content}
 {footer(rel)}
@@ -495,25 +496,60 @@ def build_project():
 
 
 def build_about():
-    intro = "".join(f"<p>{esc(t)}</p>" for t in SITE["intro"])
-    rows = [
-        ("所在", SITE["location"]),
-        ("写作", "AI 产品、行业观察、深度思考"),
-        ("GitHub", f'<a href="{SITE["github"]}" target="_blank" rel="noopener">{SITE["github"]}</a>'),
-        ("文章平台", f'<a href="{SITE["woshipm"]}" target="_blank" rel="noopener">{SITE["woshipm"]}</a>'),
+    links = [
+        ("GitHub", SITE["github"], True),
+        ("小红书", SITE["xiaohongshu"], False),
+        ("人人都是产品经理", SITE["woshipm"], False),
     ]
-    tr = "".join(f'<li><span class="date">{k}</span><span>{v}</span></li>' for k, v in rows)
-    content = f'''<main class="wrap">
-    <div class="page-head">
-      <h1>{icon("info", 24)} 关于</h1>
-      <p>我是 {esc(SITE["name"])}，{esc(SITE["bio"])}</p>
+    pills = "\n".join(
+        f'<a class="about-pill{(" ink" if primary else "")}" href="{href}" target="_blank" rel="noopener">{label} ↗</a>'
+        for label, href, primary in links
+    )
+    projects = "".join(
+        f'<div class="about-proj"><h3>{esc(p["name"])}</h3><p>{esc(p["desc"])}</p></div>'
+        for p in SITE.get("projects", [])
+    )
+    intro = "".join(f"<p>{esc(t)}</p>" for t in SITE["intro"])
+    content = f'''<main class="about-page">
+  <section class="about-hero">
+    <div class="wrap about-hero-inner">
+      <div class="about-photo">
+        <img src="../{SITE["avatar"]}" alt="{esc(SITE["name"])} 头像">
+        <span class="about-sticker sticker-mint">设计</span>
+        <span class="about-sticker sticker-marigold">AGI</span>
+      </div>
+      <div class="about-hero-text">
+        <span class="about-eyebrow">ABOUT · 关于我</span>
+        <h1 class="about-title">Hi，我是 {esc(SITE["name"])}</h1>
+        <p class="about-bio">{esc(SITE["bio"])}</p>
+        <p class="about-sub">{esc(SITE["tagline"])}</p>
+        <div class="about-pills">
+          {pills}
+        </div>
+      </div>
     </div>
-    <div class="article-body" style="max-width:720px">
+  </section>
+
+  <section class="about-grid wrap">
+    <div class="about-card card-white">
+      <span class="about-tag">关于我</span>
       {intro}
-      <ul>{tr}</ul>
     </div>
-  </main>'''
-    return full_page("关于", "关于", content, rel="../")
+    <div class="about-card card-mint">
+      <span class="about-tag">写作方向</span>
+      <h2>AI 产品 · 行业观察 · 深度思考</h2>
+    </div>
+    <div class="about-card card-marigold">
+      <span class="about-tag">所在</span>
+      <h2>{esc(SITE["location"])}</h2>
+    </div>
+    <div class="about-card card-periwinkle">
+      <span class="about-tag">正在做</span>
+      {projects}
+    </div>
+  </section>
+</main>'''
+    return full_page("关于", "关于", content, rel="../", body_class="about-page")
 
 
 def main():
