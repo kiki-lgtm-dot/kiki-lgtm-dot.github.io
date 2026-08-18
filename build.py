@@ -133,7 +133,7 @@ def load_article(meta):
             in_refs = True
             continue
         if in_refs:
-            refs.append(text)
+            refs.append((text, it.get("url", "")))
             continue
         if BOILER.match(text):
             continue
@@ -320,8 +320,17 @@ def render_body(body, rel="", skip_imgs=None):
 def render_refs(refs):
     if not refs:
         return ""
-    li = "".join(f"<li>{esc(r)}</li>" for r in refs)
-    return f'<div class="refs"><h2>参考资料</h2><ul>{li}</ul></div>'
+    li_parts = []
+    for r in refs:
+        if isinstance(r, tuple):
+            text, url = r
+            if url:
+                li_parts.append(f'<li><a href="{html.escape(url, quote=True)}" target="_blank" rel="noopener">{esc(text)} ↗</a></li>')
+            else:
+                li_parts.append(f"<li>{esc(text)}</li>")
+        else:
+            li_parts.append(f"<li>{esc(r)}</li>")
+    return f'<div class="refs"><h2>参考资料</h2><ul>{"".join(li_parts)}</ul></div>'
 
 
 def full_page(title, active, content, rel="", head_extra=""):

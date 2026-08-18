@@ -191,11 +191,13 @@
   },
   {
    "type": "p",
-   "text": "01Agent Skills 规范"
+   "text": "Agent Skills 规范",
+   "url": "https://agentskills.io/specification"
   },
   {
    "type": "p",
-   "text": "02Claude Code Skills 文档"
+   "text": "Claude Code Skills 文档",
+   "url": "https://code.claude.com/docs/en/skills"
   }
  ]
 }

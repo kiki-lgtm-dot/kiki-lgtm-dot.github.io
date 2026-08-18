@@ -378,6 +378,8 @@ img { max-width: 100%; height: auto; }
 }
 .article-body .refs h2 { font-size: 15px; }
 .article-body .refs li { font-size: 13px; color: var(--stone); }
+.article-body .refs li a { color: var(--blue); }
+.article-body .refs li a:hover { text-decoration: underline; }
 
 /* ---------- 列表页标题区 ---------- */
 .page-head { padding: 32px 0 8px; }
