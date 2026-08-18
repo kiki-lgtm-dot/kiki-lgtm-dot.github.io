@@ -416,7 +416,6 @@ img { max-width: 100%; height: auto; }
 .year-group li a { font-size: 15px; flex: 1; }
 .year-group li a:hover { color: var(--blue); }
 .year-group li .cat { font-size: 12px; color: var(--stone); flex-shrink: 0; }
-
 /* ============================================================
    关于页 · Craft Docs 数字剪贴簿拼贴风
    参考 styles.refero.design/style/9f228e72
@@ -426,159 +425,105 @@ body.about-page .site-header {
   background: rgba(255, 243, 231, 0.86);
   border-bottom-color: rgba(3, 3, 2, 0.06);
 }
+.about-page .wrap { max-width: 1040px; }
 
-.about-page .wrap { max-width: 1080px; }
-
-/* —— 拼贴风格 hero —— */
-.about-hero {
-  position: relative;
+/* —— 顶部身份区：居中、留白 —— */
+.about-top { padding: 96px 0 80px; text-align: center; }
+.about-avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
   overflow: hidden;
-  background: linear-gradient(180deg, #b9e3f6 0%, #e2f4fb 52%, #fff3e7 100%);
-  padding: 84px 0 64px;
+  margin: 0 auto 30px;
+  box-shadow:
+    0 0 0 4px #fff,
+    0 0 0 7px rgba(155, 216, 169, 0.5),
+    rgba(0, 0, 0, 0.01) 0 50px 40px 0,
+    rgba(0, 0, 0, 0.02) 0 50px 40px 0,
+    rgba(0, 0, 0, 0.05) 0 20px 40px 0,
+    rgba(0, 0, 0, 0.08) 0 3px 10px 0;
 }
-.about-hero::before {
-  content: "";
-  position: absolute;
-  left: -70px; top: -70px;
-  width: 250px; height: 250px;
-  border-radius: 50%;
-  background: rgba(155, 216, 169, 0.55);
-}
-.about-hero::after {
-  content: "";
-  position: absolute;
-  right: -50px; bottom: -100px;
-  width: 300px; height: 300px;
-  border-radius: 50%;
-  background: rgba(253, 233, 155, 0.6);
-}
-.about-hero-inner {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: 260px minmax(0, 1fr);
-  gap: 56px;
-  align-items: center;
-}
+.about-avatar img { width: 100%; height: 100%; object-fit: cover; }
 
-/* 拍立得式头像（图片主角） */
-.about-photo {
-  position: relative;
-  width: 240px;
-  height: 240px;
-  background: #fff;
-  padding: 12px 12px 46px;
-  border-radius: 14px;
-  box-shadow: rgba(0, 0, 0, 0.01) 0 50px 40px 0, rgba(0, 0, 0, 0.02) 0 50px 40px 0, rgba(0, 0, 0, 0.05) 0 20px 40px 0, rgba(0, 0, 0, 0.08) 0 3px 10px 0;
-  transform: rotate(-3deg);
-  margin: 0 auto;
-}
-.about-photo img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  border-radius: 8px;
-  display: block;
-}
-.about-sticker {
-  position: absolute;
-  font-size: 12px;
-  font-weight: 700;
-  padding: 4px 12px;
-  border-radius: 999px;
-  box-shadow: rgba(0, 0, 0, 0.14) 0 2px 6px;
-  transform: rotate(2deg);
-}
-.sticker-mint { background: #9bd8a9; color: #0c3a1e; left: -14px; top: 26px; }
-.sticker-marigold { background: #fde99b; color: #5a3c00; right: -12px; bottom: 66px; }
-
-.about-eyebrow {
-  display: inline-block;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  color: #41413f;
-  background: rgba(255, 255, 255, 0.72);
-  border: 1px solid rgba(3, 3, 2, 0.08);
-  padding: 6px 14px;
-  border-radius: 999px;
-  margin-bottom: 18px;
-}
 .about-title {
   font-family: 'Lora', var(--font-serif);
-  font-size: clamp(40px, 6vw, 60px);
+  font-size: clamp(40px, 6vw, 56px);
   font-weight: 600;
-  line-height: 1.05;
+  line-height: 1.08;
   letter-spacing: -0.02em;
   color: #030302;
-  margin: 0 0 14px;
+  margin: 0 0 20px;
 }
-.about-bio { font-size: 18px; font-weight: 500; color: #41413f; margin: 0 0 4px; }
-.about-sub { font-size: 14px; color: #6b6a66; margin: 0 0 26px; }
-
-.about-pills { display: flex; flex-wrap: wrap; gap: 10px; }
-.about-pill {
-  font-size: 14px;
-  font-weight: 500;
-  color: #030302;
-  background: #fff;
-  border: 1px solid rgba(3, 3, 2, 0.08);
-  padding: 9px 18px;
-  border-radius: 999px;
-  box-shadow: rgba(0, 0, 0, 0.08) 0 4px 12px;
-  transition: transform .16s, box-shadow .16s, color .16s;
-}
-.about-pill:hover { transform: translateY(-2px); box-shadow: rgba(0, 0, 0, 0.14) 0 8px 20px; color: #030302; }
-.about-pill.ink { background: #030302; color: #fff; border-color: #030302; }
-.about-pill.ink:hover { color: #fff; }
-
-/* —— 拼贴卡片网格 —— */
-.about-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
-  padding: 28px 24px 84px;
-}
-.about-card {
-  border-radius: 20px;
-  padding: 28px;
-  box-shadow: rgba(0, 0, 0, 0.01) 0 50px 40px 0, rgba(0, 0, 0, 0.02) 0 50px 40px 0, rgba(0, 0, 0, 0.05) 0 20px 40px 0, rgba(0, 0, 0, 0.08) 0 3px 10px 0;
-}
-.about-card:nth-child(2) { transform: rotate(0.6deg); }
-.about-card:nth-child(3) { transform: rotate(-0.6deg); }
-.about-card:nth-child(4) { transform: rotate(0.4deg); }
-.card-white { background: #ffffff; }
-.card-mint { background: #e3f4e9; }
-.card-marigold { background: #fdf2d2; }
-.card-periwinkle { background: #e6ecfb; }
-
-.about-tag {
-  display: inline-block;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
+.about-lead {
+  max-width: 560px;
+  margin: 0 auto 30px;
+  font-size: 17px;
+  line-height: 1.85;
   color: #41413f;
-  background: rgba(255, 255, 255, 0.72);
-  padding: 4px 12px;
-  border-radius: 999px;
-  margin-bottom: 14px;
 }
-.about-card h2 {
+
+.about-meta {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+}
+.about-meta span,
+.about-meta a { color: #41413f; }
+.about-meta a:hover { color: #0087ff; text-decoration: underline; }
+.about-meta .sep { color: #d8d3c8; }
+
+/* —— 正在做：两个大块左右排列 —— */
+.about-work { padding: 0 24px 96px; }
+.about-h2 {
   font-family: 'Lora', var(--font-serif);
-  font-size: 24px;
+  font-size: 28px;
   font-weight: 600;
   letter-spacing: -0.01em;
   color: #030302;
-  margin: 0 0 10px;
+  margin: 0 0 24px;
 }
-.about-card p { font-size: 15px; line-height: 1.75; color: #41413f; margin: 0 0 10px; }
-.about-card p:last-child { margin-bottom: 0; }
-.about-proj { margin-bottom: 16px; }
-.about-proj:last-child { margin-bottom: 0; }
-.about-proj h3 { font-size: 17px; font-weight: 700; color: #030302; margin: 0 0 4px; }
-.about-proj p { font-size: 14px; color: #5b5a56; margin: 0; }
+.about-work-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+.about-work-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow:
+    rgba(0, 0, 0, 0.01) 0 50px 40px 0,
+    rgba(0, 0, 0, 0.02) 0 50px 40px 0,
+    rgba(0, 0, 0, 0.05) 0 20px 40px 0,
+    rgba(0, 0, 0, 0.08) 0 3px 10px 0;
+}
+.about-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-bottom: 18px;
+}
+.dot-mint { background: #9bd8a9; }
+.dot-periwinkle { background: #b8caf5; }
+.about-work-card h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #030302;
+  margin: 0 0 8px;
+}
+.about-work-card p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #5b5a56;
+  margin: 0;
+}
 
 @media (max-width: 720px) {
-  .about-hero { padding: 56px 0 48px; }
-  .about-hero-inner { grid-template-columns: 1fr; gap: 36px; }
-  .about-grid { grid-template-columns: 1fr; padding: 20px 16px 64px; }
+  .about-top { padding: 64px 0 60px; }
+  .about-work { padding-bottom: 64px; }
+  .about-work-grid { grid-template-columns: 1fr; }
 }

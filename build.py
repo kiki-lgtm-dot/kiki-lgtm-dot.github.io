@@ -496,55 +496,36 @@ def build_project():
 
 
 def build_about():
-    links = [
-        ("GitHub", SITE["github"], True),
-        ("小红书", SITE["xiaohongshu"], False),
-        ("人人都是产品经理", SITE["woshipm"], False),
-    ]
-    pills = "\n".join(
-        f'<a class="about-pill{(" ink" if primary else "")}" href="{href}" target="_blank" rel="noopener">{label} ↗</a>'
-        for label, href, primary in links
+    lead = "".join(SITE["intro"])
+    meta = (
+        f'<span>{esc(SITE["location"])}</span>'
+        f'<span class="sep">·</span>'
+        f'<a href="{SITE["github"]}" target="_blank" rel="noopener">GitHub</a>'
+        f'<span class="sep">·</span>'
+        f'<a href="{SITE["xiaohongshu"]}" target="_blank" rel="noopener">小红书</a>'
+        f'<span class="sep">·</span>'
+        f'<a href="{SITE["woshipm"]}" target="_blank" rel="noopener">人人都是产品经理</a>'
     )
+    dots = ["mint", "periwinkle"]
     projects = "".join(
-        f'<div class="about-proj"><h3>{esc(p["name"])}</h3><p>{esc(p["desc"])}</p></div>'
-        for p in SITE.get("projects", [])
+        f'<div class="about-work-card"><span class="about-dot dot-{dots[i % 2]}"></span><h3>{esc(p["name"])}</h3><p>{esc(p["desc"])}</p></div>'
+        for i, p in enumerate(SITE.get("projects", []))
     )
-    intro = "".join(f"<p>{esc(t)}</p>" for t in SITE["intro"])
     content = f'''<main class="about-page">
-  <section class="about-hero">
-    <div class="wrap about-hero-inner">
-      <div class="about-photo">
-        <img src="../{SITE["avatar"]}" alt="{esc(SITE["name"])} 头像">
-        <span class="about-sticker sticker-mint">设计</span>
-        <span class="about-sticker sticker-marigold">AGI</span>
-      </div>
-      <div class="about-hero-text">
-        <span class="about-eyebrow">ABOUT · 关于我</span>
-        <h1 class="about-title">Hi，我是 {esc(SITE["name"])}</h1>
-        <p class="about-bio">{esc(SITE["bio"])}</p>
-        <p class="about-sub">{esc(SITE["tagline"])}</p>
-        <div class="about-pills">
-          {pills}
-        </div>
+  <section class="about-top">
+    <div class="wrap about-top-inner">
+      <div class="about-avatar"><img src="../{SITE["avatar"]}" alt="{esc(SITE["name"])}"></div>
+      <h1 class="about-title">Hi，我是 {esc(SITE["name"])}</h1>
+      <p class="about-lead">{esc(lead)}</p>
+      <div class="about-meta">
+        {meta}
       </div>
     </div>
   </section>
 
-  <section class="about-grid wrap">
-    <div class="about-card card-white">
-      <span class="about-tag">关于我</span>
-      {intro}
-    </div>
-    <div class="about-card card-mint">
-      <span class="about-tag">写作方向</span>
-      <h2>AI 产品 · 行业观察 · 深度思考</h2>
-    </div>
-    <div class="about-card card-marigold">
-      <span class="about-tag">所在</span>
-      <h2>{esc(SITE["location"])}</h2>
-    </div>
-    <div class="about-card card-periwinkle">
-      <span class="about-tag">正在做</span>
+  <section class="about-work wrap">
+    <h2 class="about-h2">正在做</h2>
+    <div class="about-work-grid">
       {projects}
     </div>
   </section>
